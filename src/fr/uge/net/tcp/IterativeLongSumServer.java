@@ -52,6 +52,7 @@ public class IterativeLongSumServer {
         // TODO
         var buffer = ByteBuffer.allocate(BUFFER_SIZE);
         for(;;){
+            buffer.clear();
             long total = 0L;
             sc = serverSocketChannel.accept();
             buffer.limit(Integer.BYTES);
@@ -63,7 +64,7 @@ public class IterativeLongSumServer {
             var size = buffer.getInt();
             if(size <= 0){
                 logger.info("Le client envoie des données qui ne respecte pas le protocole, on ignore");
-                return;
+                continue;
             }
             buffer.clear();
             buffer.limit(Long.BYTES * size);
